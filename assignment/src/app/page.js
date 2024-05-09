@@ -4,8 +4,6 @@ import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -13,18 +11,30 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
-import Row from "@/customComponents/row"
-import UsageReason from "@/customComponents/usageReason"
+import Row from "@/customs/row"
+import Usage from "@/customs/usage"
 
 export default function Home() {
 
-  const [count, setCount] = useState<number>(1);
+  const initialState = {
+    admin: "",
+    usage: "",
+    reason: "",
+    serial: []
+  }
+
+  const [count, setCount] = useState(1);
+  const [formData, setFormData] = useState(initialState);
+
+  const onInputChange = (e) => {
+    setFormData((data) => ({...data, [e.target.id]: e.target.value}))
+  }
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline">Edit Profile</Button>
+          <Button variant="outline">Click!</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[90vw] sm:min-h-[70vh]">
           <DialogHeader>
@@ -35,8 +45,15 @@ export default function Home() {
           <div>
             <div className="w-[60vw]">
               <span>
-                <Label htmlFor="AdminId">Admin/ID</Label>
-                <Input type="text" name="AdminId" placeholder="Admin/ID" className="w-[15vw] mb-10" />
+                <Label htmlFor="admin">Admin/ID</Label>
+                <Input
+                  type="text" 
+                  id="admin"
+                  placeholder="Admin/ID"
+                  className="w-[15vw] mb-10"
+                  value={formData.admin}
+                  onChange={(e) => onInputChange(e)}
+                />
               </span>
               <span className="w-full">
                 {Array.from({ length: count }, (_, index) => (
@@ -52,7 +69,7 @@ export default function Home() {
                 </span>
               </span>
 
-              <UsageReason />
+              <Usage formData = {formData} onInputChange = {onInputChange} />
 
               <div>
                 <h1>Description</h1>
@@ -65,7 +82,9 @@ export default function Home() {
             </div>
           </div>
           <div className="w-full flex flex-row-reverse">
-            <Button className="w-[10vw] bg-blue-800">
+            <Button className="w-[10vw] bg-blue-800"
+              onClick={() => console.log(formData)}
+            >
               Check In
             </Button>
           </div>
