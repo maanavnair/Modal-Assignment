@@ -20,15 +20,34 @@ export default function Home() {
     admin: "",
     usage: "",
     reason: "",
-    serial: []
+    serial: [{
+      product: "",
+      quantity: 0
+    }]
   }
 
-  const [count, setCount] = useState(1);
   const [formData, setFormData] = useState(initialState);
+
 
   const onInputChange = (e) => {
     setFormData((data) => ({...data, [e.target.id]: e.target.value}))
   }
+
+  const handleAddRow = () => {
+    setFormData((prevState) => ({
+      ...prevState,
+      serial: [...prevState.serial, { product: '', quantity: 0 }],
+    }));
+  };
+
+  const setRowData = (index, updatedProduct, updatedQuantity) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      serial: prevState.serial.map((item, i) =>
+        i === index ? { product: updatedProduct, quantity: updatedQuantity } : item
+      ),
+    }));
+  };
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -55,19 +74,25 @@ export default function Home() {
                   onChange={(e) => onInputChange(e)}
                 />
               </span>
+
+
               <span className="w-full">
-                {Array.from({ length: count }, (_, index) => (
-                  <Row key={index} />
+                {formData.serial.map((row, index) => (
+                  <Row
+                    key={index}
+                    index={index}
+                    formData={row}
+                    setRowData={setRowData}
+                    onInputChange={onInputChange}
+                  />
                 ))}
                 <span className="w-full flex flex-row-reverse">
-                  <Button variant='outline'
-                    className="border-none mt-2"
-                    onClick={(e) => setCount((prev) => prev + 1)}
-                  >
+                  <Button variant="outline" className="border-none mt-2" onClick={handleAddRow}>
                     +Add more
                   </Button>
                 </span>
               </span>
+
 
               <Usage formData = {formData} onInputChange = {onInputChange} />
 
