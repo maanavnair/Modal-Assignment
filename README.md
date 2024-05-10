@@ -20,7 +20,7 @@
 -On clicking `Check In`, the complete data will be logged out in the console.\
 -The Product,Quantity and Menu items will be shown within an array called serial.
 
-##Note:
+## Note
 
 -You can't select the same Product twice, if you do that row get's locked.\
 -You can increase the quantity as much as you desire.\
