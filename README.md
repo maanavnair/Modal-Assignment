@@ -8,6 +8,7 @@
 
 ## How the Application works
 
+-Click the `Click` button to open the Modal.\
 -You need to enter the Admin ID, Usage and Reason.\
 -You can select the Product from the drop down and enter the quantity in the input field beside it.\
 -You can select another product by clicking the `Add More` button and selecting another Product and entering the desired quantity.\
