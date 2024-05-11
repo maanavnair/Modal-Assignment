@@ -83,11 +83,11 @@ export default function Home() {
     setProductsList((prevList) => [...prevList, { product: formData.serial[toggleMenu.index].product, menu: menuInputs }]);
 };
 
-const handleDelete = (index) => {
+const handleDelete = (product, index) => {
   setFormData((prevState) => ({
     ...prevState,
     serial: prevState.serial.map((item, i) =>
-      i === index ? { ...item, menu: [] } : item
+      product === item.product ? { ...item, menu: [] } : item
     ),
   }));
 
@@ -160,7 +160,7 @@ const handleDelete = (index) => {
                   <li key={index} className="text-sm flex justify-between w-[20vw] mb-1 ml-7">
                     {product.product}{" "}
                       <Button 
-                        onClick={() => handleDelete(index)}
+                        onClick={() => handleDelete(product.product, index)}
                         className='h-[3vh]'
                       >
                         Delete
